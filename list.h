@@ -7,8 +7,9 @@
 #include "iterator.h"
 #include <cstdlib>
 
+
 template <class T>
-struct __list_node 
+    struct __list_node 
 {
     typedef void * void_pointer;
     void_pointer next;
@@ -41,7 +42,7 @@ public:
     bool operator!= (const self& x) const { return node != x.node; }
 
     reference operator* () const { return (*node).data; }
-    
+
     pointer operator-> () const { return &operator*(); }
 
     //对迭代器+1就是前进一个节点
@@ -88,7 +89,7 @@ public:
     typedef T&                  reference;
     typedef T*                  pointer;
     typedef std::ptrdiff_t      size_type;
-    
+
     typedef list_node* link_type;
 
 protected:
@@ -127,7 +128,7 @@ public:
     reference back() { return *(--end()); }
 
     list() { empty_inisialize(); }
-    
+
     void splice(iterator position, list& x) {
         if (x.empty()) {
             transfer(position, x.begin(), x.end());
@@ -149,7 +150,7 @@ public:
     void clear();
     void remove(const T&);
     void unique();
-    
+
     void merge(list<T, Alloc>&);
     void reverse();
     void sort();
@@ -194,21 +195,21 @@ protected:
 
     void transfer(iterator position, iterator first, iterator last) {
         if (position != last) {
-            
+
             (*( link_type( (*last.node).prev ) )).next = position.node;
             (*( link_type( (*first.node).prev ) )).next = last.node;
             (*( link_type( (*position.node).prev ) )).next = first.node;
-            
+
             link_type tmp = link_type((*position.node).prev);
-            
-             (*position.node).prev = (*last.node).prev;
+
+            (*position.node).prev = (*last.node).prev;
             (*last.node).prev = (*first.node).prev;
             (*first.node).prev = tmp;
         }
     }
 };
 
-template <class T, class Alloc>
+    template <class T, class Alloc>
 void list<T, Alloc>::clear()
 {
     link_type cur = (link_type)node->next; //begin()
@@ -222,7 +223,7 @@ void list<T, Alloc>::clear()
 }
 
 //移除值为value的元素
-template <class T, class Alloc>
+    template <class T, class Alloc>
 void list<T, Alloc>::remove(const T& value)
 {
     iterator first = begin();
@@ -236,14 +237,14 @@ void list<T, Alloc>::remove(const T& value)
     }
 }
 
-template <class T, class Alloc>
+    template <class T, class Alloc>
 void list<T, Alloc>::unique() 
 {
     iterator first = begin();
     iterator last = end();
 
     if (first == last) return;
-    
+
     iterator next = first;
 
     while (++next != last) {
@@ -256,7 +257,7 @@ void list<T, Alloc>::unique()
 }
 
 
-template <class T, class Alloc>
+    template <class T, class Alloc>
 void list<T, Alloc>::merge(list<T, Alloc>& x)
 {
     iterator first1 = begin();
@@ -278,7 +279,7 @@ void list<T, Alloc>::merge(list<T, Alloc>& x)
         transfer(last1, first2, last2);
 }
 
-template <class T, class Alloc>
+    template <class T, class Alloc>
 void list<T, Alloc>::reverse() 
 {
     if (node->next == node || link_type(node->next)->next == node) 
@@ -292,7 +293,7 @@ void list<T, Alloc>::reverse()
     }
 }
 
-template <class T, class Alloc>
+    template <class T, class Alloc>
 void list<T, Alloc>::sort() 
 {
     if (node->next == node || link_type(node->next)->next == node)
