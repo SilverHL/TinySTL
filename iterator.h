@@ -2,7 +2,7 @@
 #ifndef _ITERATOR_H
 #define _ITERATOR_H
 
-#include <stdlib.h>
+#include <cstddef>
 
 struct input_iterator_tag {};
 struct output_iterator_tag {};
@@ -65,7 +65,8 @@ distance_type(const Iterator&)
 
 //得到value_type
 template <class Iterator>
-inline typename iterator_traits<Iterator>::value_type*
+inline 
+typename iterator_traits<Iterator>::value_type*
 value_type(const Iterator&)
 {
     return static_cast<typename iterator_traits<Iterator>::value_type*>(0);
