@@ -124,7 +124,7 @@ struct __deque_iterator
 
 inline size_t __deque_buf_size(size_t n, size_t sz)
 {
-    return n != 0 ? n : (sz > 512 ? size_t(512 / sz) : size_t(1));
+    return n != 0 ? n : (sz < 512 ? size_t(512 / sz) : size_t(1));
 }
 
 template <class T, class Alloc = alloc, size_t BufSiz = 0>
@@ -297,6 +297,8 @@ public:
     {
         //fill_initialized(0, 0);
          
+        map = 0;
+        map_size = 0;
         create_map_and_nodes(0);
         
     }
