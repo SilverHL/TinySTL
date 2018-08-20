@@ -2,8 +2,12 @@
 #include "vector.h"
 #include "iterator.h"
 #include "list.h"
+#include "deque.h"
+#include "allocate.h"
+
 int main()
 {
+    /**
     std::cout << "success!" << std::endl;
     vector<int> vec;
     
@@ -63,6 +67,23 @@ int main()
         beg++;
     }
     
+    **/
+    deque<int> deq;    
+
+    deq.push_back(1);
+    deq.push_front(231);
+    deq.push_back(333);
+    deq.push_back(455);
+ 
+    for (auto i = deq.begin(); i != deq.end(); i++)
+        std::cout << *i << std::endl; 
+
+    deq.erase(deq.begin(), deq.end()-2);
+    
+    std::cout << "all numbers:" << std::endl;
+
+    for (auto i = deq.begin(); i != deq.end(); i++)
+        std::cout << *i << std::endl; 
 
 
 }
