@@ -8,6 +8,7 @@ ALLOC_H	allocate.h	3;"	d
 CONSTRUCT_H	construct.h	3;"	d
 FREELIST_INDEX	default_allocator.h	/^    static size_t FREELIST_INDEX(size_t bytes) {$/;"	f	class:__default_alloc_template
 ROUND_UP	default_allocator.h	/^    static size_t ROUND_UP(size_t bytes){$/;"	f	class:__default_alloc_template
+_DEQUE_H_	deque.h	2;"	d
 _HEAP_H	heap.h	3;"	d
 _INITIALIZED_H	initialized.h	3;"	d
 _ITERATOR_H	iterator.h	3;"	d
@@ -21,10 +22,13 @@ __MAX_BYTES	default_allocator.h	/^enum {__MAX_BYTES = 128};$/;"	e	enum:__anon2
 __NFREELISTS	default_allocator.h	/^enum {__NFREELISTS = __MAX_BYTES \/ __ALIGN};$/;"	e	enum:__anon3
 __STL_TEMPLATE_NULL	type_traits.h	5;"	d
 __THROW_BAD_ALLOC	malloctor.h	11;"	d
+__adjust_heap	heap.h	/^void __adjust_heap(RandomAccessIterator first, Distance holeIndex, $/;"	f
 __advance	iterator.h	/^inline  void __advance(BidirectionalIterator& i, Distance n, $/;"	f
 __advance	iterator.h	/^inline void __advance(InputIterator& i, Distance n, $/;"	f
 __advance	iterator.h	/^inline void __advance(RandomAccessIterator& i, Distance n, $/;"	f
 __default_alloc_template	default_allocator.h	/^class __default_alloc_template $/;"	c
+__deque_buf_size	deque.h	/^inline size_t __deque_buf_size(size_t n, size_t sz)$/;"	f
+__deque_iterator	deque.h	/^struct __deque_iterator $/;"	s
 __destroy	construct.h	/^inline void __destroy(ForwardIterator first, ForwardIterator last, T*)$/;"	f
 __destroy_aux	construct.h	/^inline void __destroy_aux(ForwardIterator first, ForwardIterator last, __false_type)$/;"	f
 __destroy_aux	construct.h	/^inline void __destroy_aux(ForwardIterator, ForwardIterator, __true_type) {}$/;"	f
@@ -35,10 +39,13 @@ __list_iterator	list.h	/^    __list_iterator() {}$/;"	f	class:__list_iterator
 __list_iterator	list.h	/^    __list_iterator(const iterator& x) : node(x.node) {}$/;"	f	class:__list_iterator
 __list_iterator	list.h	/^    __list_iterator(link_type x) : node(x) {}$/;"	f	class:__list_iterator
 __list_iterator	list.h	/^class __list_iterator $/;"	c
-__list_node	list.h	/^struct __list_node $/;"	s
+__list_node	list.h	/^    struct __list_node $/;"	s
+__make_heap	heap.h	/^void __make_heap(RandomAccessIterator first,$/;"	f
 __malloc_alloc_oom_handler	malloctor.h	/^    static void (* __malloc_alloc_oom_handler)();$/;"	m	class:__malloc_alloc_template
 __malloc_alloc_oom_handler	malloctor.h	/^void (* __malloc_alloc_template<inst>::__malloc_alloc_oom_handler)() = 0;$/;"	v
 __malloc_alloc_template	malloctor.h	/^class __malloc_alloc_template {$/;"	c
+__pop_head	heap.h	/^inline void __pop_head(RandomAccessIterator first, $/;"	f
+__pop_head_aux	heap.h	/^inline void __pop_head_aux(RandomAccessIterator first, $/;"	f
 __true_type	type_traits.h	/^struct __true_type {};$/;"	s
 __type_traits	type_traits.h	/^__STL_TEMPLATE_NULL struct __type_traits<char> {$/;"	s
 __type_traits	type_traits.h	/^__STL_TEMPLATE_NULL struct __type_traits<double> {$/;"	s
@@ -62,38 +69,51 @@ __uninitialized_fill_aux	initialized.h	/^__uninitialized_fill_aux(InputIterator 
 __uninitialized_fill_aux	initialized.h	/^__uninitialized_fill_aux(InputIterator first, InputIterator last, const T& x, __true_type)$/;"	f
 __uninitialized_fill_n	initialized.h	/^inline ForwardIterator __uninitialized_fill_n(ForwardIterator first, Size n, const T& x, T1*)$/;"	f
 __uninitialized_fill_n_aux	initialized.h	/^__uninitialized_fill_n_aux(ForwardIterator first, Size n, $/;"	f
+_initial_map_size	deque.h	/^    enum _initial_map_size { initial_map_size = 8 };$/;"	g	class:deque
 advance	iterator.h	/^inline void advance(InputIterator& i, Distance n) $/;"	f
 alloc	allocate.h	/^typedef default_alloc alloc;$/;"	t
-allocate	allocate.h	/^    static T *allocate(size_t n) { $/;"	f	class:simple_alloc
-allocate	allocate.h	/^    static T *allocate(void) {$/;"	f	class:simple_alloc
+allocate	allocate.h	/^        static T *allocate(size_t n) { $/;"	f	class:simple_alloc
+allocate	allocate.h	/^        static T *allocate(void) {$/;"	f	class:simple_alloc
 allocate	default_allocator.h	/^    static void *allocate(size_t n) {$/;"	f	class:__default_alloc_template
 allocate	malloctor.h	/^    static void *allocate(size_t n) {$/;"	f	class:__malloc_alloc_template
 allocate_and_fill	vector.h	/^    iterator allocate_and_fill(size_type n, const T& x) {$/;"	f	class:vector
+allocate_node	deque.h	/^    T* allocate_node()$/;"	f	class:deque
+back	deque.h	/^    reference back() $/;"	f	class:deque
 back	list.h	/^    reference back() { return *(--end()); }$/;"	f	class:list
 back	vector.h	/^    reference back() { return *(end() - 1); }$/;"	f	class:vector
+begin	deque.h	/^    iterator begin() { return start; }$/;"	f	class:deque
 begin	list.h	/^    iterator begin() { return (link_type)((*node).next); }$/;"	f	class:list
 begin	vector.h	/^    iterator begin() const { return start; }$/;"	f	class:vector
 bidirectional_iterator_tag	iterator.h	/^struct bidirectional_iterator_tag : public forward_iterator_tag {};$/;"	s
+buffer_size	deque.h	/^    static size_t buffer_size() { return __deque_buf_size(BufSize, sizeof(T)); }$/;"	f	struct:__deque_iterator
 capacity	vector.h	/^    size_type capacity() const$/;"	f	class:vector
 chunk_alloc	default_allocator.h	/^chunk_alloc(size_t size, int &nobjs) $/;"	f	class:__default_alloc_template
 clear	list.h	/^void list<T, Alloc>::clear()$/;"	f	class:list
 clear	vector.h	/^    void clear() { erase(begin(), end()); }$/;"	f	class:vector
 client_data	default_allocator.h	/^        char client_data[1];$/;"	m	union:__default_alloc_template::obj
+const_iterator	deque.h	/^    typedef __deque_iterator<T, const T&, const T*, BufSize> const_iterator;$/;"	t	struct:__deque_iterator
 construct	construct.h	/^inline void construct(T1* p, const T2& value)$/;"	f
+create_map_and_nodes	deque.h	/^void deque<T, Alloc, BufSiz>::create_map_and_nodes(size_type num_elements)$/;"	f	class:deque
 create_node	list.h	/^    link_type create_node(const T& x) {$/;"	f	class:list
+cur	deque.h	/^    T* cur;$/;"	m	struct:__deque_iterator
 data	list.h	/^    T data;$/;"	m	struct:__list_node
+data_allocator	deque.h	/^    typedef simple_alloc<value_type, Alloc> data_allocator;$/;"	t	class:deque
 data_allocator	vector.h	/^    typedef simple_alloc<value_type, Alloc> data_allocator;$/;"	t	class:vector
-deallocate	allocate.h	/^    static void deallocate(T *p) {$/;"	f	class:simple_alloc
-deallocate	allocate.h	/^    static void deallocate(T *p, size_t n) {$/;"	f	class:simple_alloc
+deallocate	allocate.h	/^        static void deallocate(T *p) {$/;"	f	class:simple_alloc
+deallocate	allocate.h	/^        static void deallocate(T *p, size_t n) {$/;"	f	class:simple_alloc
 deallocate	default_allocator.h	/^    static void deallocate(void *p, size_t n) {$/;"	f	class:__default_alloc_template
 deallocate	malloctor.h	/^    static void deallocate(void *p, size_t n) {$/;"	f	class:__malloc_alloc_template
 deallocate	vector.h	/^    void deallocate() {$/;"	f	class:vector
 default_alloc	allocate.h	/^typedef __default_alloc_template<0, 0> default_alloc;$/;"	t
+deque	deque.h	/^    deque(int n, const value_type& value)$/;"	f	class:deque
+deque	deque.h	/^class deque$/;"	c
 destroy	construct.h	/^inline void destroy(ForwardIterator first, ForwardIterator last)$/;"	f
 destroy	construct.h	/^inline void destroy(T* pointer)$/;"	f
 destroy	construct.h	/^inline void destroy(char *, char*) {}$/;"	f
 destroy	construct.h	/^inline void destroy(wchar_t *, wchar_t *) {}$/;"	f
 destroy_node	list.h	/^    void destroy_node(link_type p) {$/;"	f	class:list
+difference_type	deque.h	/^    typedef ptrdiff_t   difference_type;$/;"	t	class:deque
+difference_type	deque.h	/^    typedef ptrdiff_t   difference_type;$/;"	t	struct:__deque_iterator
 difference_type	iterator.h	/^    typedef Distance    difference_type;$/;"	t	struct:iterator
 difference_type	iterator.h	/^    typedef std::ptrdiff_t              difference_type;$/;"	t	struct:iterator_traits
 difference_type	iterator.h	/^    typedef typename Iterator::difference_type      difference_type;$/;"	t	struct:iterator_traits
@@ -101,9 +121,11 @@ difference_type	list.h	/^    typedef std::ptrdiff_t       difference_type;$/;"	t
 difference_type	vector.h	/^    typedef ptrdiff_t   difference_type;$/;"	t	class:vector
 distance	iterator.h	/^distance(InputIterator first, InputIterator last)$/;"	f
 distance_type	iterator.h	/^distance_type(const Iterator&) $/;"	f
+empty	deque.h	/^    bool empty() const { return finish == start; }$/;"	f	class:deque
 empty	list.h	/^    bool empty() const { return node->next == node; }$/;"	f	class:list
 empty	vector.h	/^    bool empty() const { return begin() == end(); }$/;"	f	class:vector
 empty_inisialize	list.h	/^    void empty_inisialize() {$/;"	f	class:list
+end	deque.h	/^    iterator end() { return finish; }$/;"	f	class:deque
 end	list.h	/^    iterator end() { return node; }$/;"	f	class:list
 end	vector.h	/^    iterator end() const { return finish; }$/;"	f	class:vector
 end_free	default_allocator.h	/^    static char *end_free;$/;"	m	class:__default_alloc_template
@@ -113,11 +135,15 @@ erase	list.h	/^    iterator erase(iterator position) {$/;"	f	class:list
 erase	vector.h	/^    iterator erase(iterator first, iterator last) {$/;"	f	class:vector
 erase	vector.h	/^    iterator erase(iterator position) {$/;"	f	class:vector
 fill_initialize	vector.h	/^    void fill_initialize(size_type n, const T& value) {$/;"	f	class:vector
+fill_initialized	deque.h	/^void deque<T, Alloc, BufSiz>::fill_initialized(size_type n, $/;"	f	class:deque
+finish	deque.h	/^    iterator finish;$/;"	m	class:deque
 finish	vector.h	/^    iterator finish;        \/\/目前使用的空间尾$/;"	m	class:vector
+first	deque.h	/^    T* first;$/;"	m	struct:__deque_iterator
 forward_iterator_tag	iterator.h	/^struct forward_iterator_tag : public input_iterator_tag {};$/;"	s
 free_list	default_allocator.h	/^    static obj * volatile free_list[__NFREELISTS];$/;"	m	class:__default_alloc_template
 free_list	default_allocator.h	/^__default_alloc_template<threads, inst>::free_list[__NFREELISTS] = $/;"	m	class:__default_alloc_template::__default_alloc_template
 free_list_link	default_allocator.h	/^        union obj * free_list_link;$/;"	m	union:__default_alloc_template::obj	typeref:union:__default_alloc_template::obj::obj
+front	deque.h	/^    reference front() { return *start; }$/;"	f	class:deque
 front	list.h	/^    reference front() { return *begin(); }$/;"	f	class:list
 front	vector.h	/^    reference front() { return *begin(); }$/;"	f	class:vector
 get_node	list.h	/^    link_type get_node() { return list_node_allocator::allocate(); }$/;"	f	class:list
@@ -131,16 +157,21 @@ has_trivial_destructor	type_traits.h	/^    typedef __false_type    has_trivial_d
 has_trivial_destructor	type_traits.h	/^    typedef __true_type     has_trivial_destructor;$/;"	t	struct:__type_traits
 heap_size	default_allocator.h	/^    static size_t heap_size; $/;"	m	class:__default_alloc_template
 heap_size	default_allocator.h	/^size_t __default_alloc_template<threads, inst>::heap_size = 0;$/;"	m	class:__default_alloc_template
+initial_map_size	deque.h	/^    enum _initial_map_size { initial_map_size = 8 };$/;"	e	enum:deque::_initial_map_size
 input_iterator_tag	iterator.h	/^struct input_iterator_tag {};$/;"	s
+insert	deque.h	/^    iterator insert(iterator position, const value_type& x)$/;"	f	class:deque
 insert	list.h	/^    iterator insert(iterator position, const T& x) {$/;"	f	class:list
 insert	vector.h	/^void vector<T, Alloc>::insert(iterator position, size_type n, const T& x)$/;"	f	class:vector
 insert_aux	vector.h	/^void vector<T, Alloc>::insert_aux(iterator position, const T& x) $/;"	f	class:vector
 is_POD_TYPE	type_traits.h	/^    typedef __true_type     is_POD_TYPE;$/;"	t	struct:__type_traits
 is_POD_type	type_traits.h	/^    typedef __false_type    is_POD_type;$/;"	t	struct:__type_traits
+iterator	deque.h	/^    typedef __deque_iterator<T, T&, T*, BufSiz> iterator;$/;"	t	class:deque
+iterator	deque.h	/^    typedef __deque_iterator<T, T&, T*, BufSize>    iterator;$/;"	t	struct:__deque_iterator
 iterator	iterator.h	/^struct iterator {$/;"	s
 iterator	list.h	/^    typedef __list_iterator<T, T&, T*>      iterator;$/;"	t	class:__list_iterator
 iterator	list.h	/^    typedef __list_iterator<T, T&, T*> iterator;$/;"	t	class:list
 iterator	vector.h	/^    typedef value_type* iterator;$/;"	t	class:vector
+iterator_category	deque.h	/^    typedef random_access_iterator_tag iterator_category;$/;"	t	struct:__deque_iterator
 iterator_category	iterator.h	/^    typedef Category    iterator_category;$/;"	t	struct:iterator
 iterator_category	iterator.h	/^    typedef random_access_iterator_tag  iterator_category;$/;"	t	struct:iterator_traits
 iterator_category	iterator.h	/^    typedef typename Iterator::iterator_category    iterator_category;$/;"	t	struct:iterator_traits
@@ -148,6 +179,7 @@ iterator_category	list.h	/^    typedef bidirectional_iterator_tag iterator_categ
 iterator_traits	iterator.h	/^struct iterator_traits {$/;"	s
 iterator_traits	iterator.h	/^struct iterator_traits<T*> {$/;"	s
 iterator_traits	iterator.h	/^struct iterator_traits<const T*> {$/;"	s
+last	deque.h	/^    T* last;$/;"	m	struct:__deque_iterator
 link_type	list.h	/^    typedef __list_node<T>* link_type;$/;"	t	class:__list_iterator
 link_type	list.h	/^    typedef list_node* link_type;$/;"	t	class:list
 list	list.h	/^    list() { empty_inisialize(); }$/;"	f	class:list
@@ -156,24 +188,46 @@ list_node	list.h	/^    typedef __list_node<T> list_node;$/;"	t	class:list
 list_node_allocator	list.h	/^    typedef simple_alloc<list_node, Alloc> list_node_allocator;$/;"	t	class:list
 main	test.cpp	/^int main()$/;"	f
 malloc_alloc	malloctor.h	/^typedef __malloc_alloc_template<0> malloc_alloc;$/;"	t
+map	deque.h	/^    map_pointer map;$/;"	m	class:deque
+map_allocator	deque.h	/^    typedef simple_alloc<pointer, Alloc> map_allocator;$/;"	t	class:deque
+map_pointer	deque.h	/^    typedef T**         map_pointer;$/;"	t	struct:__deque_iterator
+map_pointer	deque.h	/^    typedef pointer* map_pointer;$/;"	t	class:deque
+map_size	deque.h	/^    size_type map_size;$/;"	m	class:deque
+max_size	deque.h	/^    size_type max_size() const { return size_type(-1); }$/;"	f	class:deque
 merge	list.h	/^void list<T, Alloc>::merge(list<T, Alloc>& x)$/;"	f	class:list
 next	list.h	/^    void_pointer next;$/;"	m	struct:__list_node
+node	deque.h	/^    map_pointer node;$/;"	m	struct:__deque_iterator
 node	list.h	/^    link_type node; \/\/list迭代器内部指针 指向list节点$/;"	m	class:__list_iterator
 node	list.h	/^    link_type node;$/;"	m	class:list
 obj	default_allocator.h	/^    union obj {$/;"	u	class:__default_alloc_template
 oom_malloc	malloctor.h	/^void * __malloc_alloc_template<inst>::oom_malloc(size_t t) $/;"	f	class:__malloc_alloc_template
 oom_realloc	malloctor.h	/^void * __malloc_alloc_template<inst>::oom_realloc(void *p, size_t n)$/;"	f	class:__malloc_alloc_template
+operator !=	deque.h	/^    bool operator!=(const self& x) const { return cur != x.cur; }$/;"	f	struct:__deque_iterator
 operator !=	list.h	/^    bool operator!= (const self& x) const { return node != x.node; }$/;"	f	class:__list_iterator
+operator *	deque.h	/^    reference operator*() const { return *cur; }$/;"	f	struct:__deque_iterator
 operator *	list.h	/^    reference operator* () const { return (*node).data; }$/;"	f	class:__list_iterator
+operator +	deque.h	/^    self operator+(difference_type n) { return *this += n; }$/;"	f	struct:__deque_iterator
+operator ++	deque.h	/^    self operator++(int)$/;"	f	struct:__deque_iterator
+operator ++	deque.h	/^    self& operator++()$/;"	f	struct:__deque_iterator
 operator ++	list.h	/^    self& operator++() {$/;"	f	class:__list_iterator
 operator ++	list.h	/^    self& operator++(int) {$/;"	f	class:__list_iterator
+operator +=	deque.h	/^    self& operator+=(difference_type n)$/;"	f	struct:__deque_iterator
+operator -	deque.h	/^    difference_type operator-(const self& x) const$/;"	f	struct:__deque_iterator
 operator -	iterator.h	/^operator-(InputIterator first, InputIterator last) $/;"	f
+operator --	deque.h	/^    self operator--(int)$/;"	f	struct:__deque_iterator
+operator --	deque.h	/^    self& operator--()$/;"	f	struct:__deque_iterator
 operator --	list.h	/^    self& operator--() {$/;"	f	class:__list_iterator
 operator --	list.h	/^    self& operator--(int) {$/;"	f	class:__list_iterator
+operator ->	deque.h	/^    pointer operator->() const { return &(operator*()); }$/;"	f	struct:__deque_iterator
 operator ->	list.h	/^    pointer operator-> () const { return &operator*(); }$/;"	f	class:__list_iterator
+operator <	deque.h	/^    bool operator<(const self& x) const $/;"	f	struct:__deque_iterator
+operator ==	deque.h	/^    bool operator==(const self& x) const { return cur == x.cur; }$/;"	f	struct:__deque_iterator
 operator ==	list.h	/^    bool operator== (const self& x) const { return node == x.node; }$/;"	f	class:__list_iterator
+operator []	deque.h	/^    reference operator[] (size_type n)$/;"	f	class:deque
 operator []	vector.h	/^    reference operator[](size_type n) { return *(begin() + n); }$/;"	f	class:vector
 output_iterator_tag	iterator.h	/^struct output_iterator_tag {};$/;"	s
+pointer	deque.h	/^    typedef Ptr         pointer;$/;"	t	struct:__deque_iterator
+pointer	deque.h	/^    typedef value_type* pointer;$/;"	t	class:deque
 pointer	iterator.h	/^    typedef Pointer     pointer;$/;"	t	struct:iterator
 pointer	iterator.h	/^    typedef T*                          pointer;$/;"	t	struct:iterator_traits
 pointer	iterator.h	/^    typedef const T*                    pointer;$/;"	t	struct:iterator_traits
@@ -181,17 +235,25 @@ pointer	iterator.h	/^    typedef typename Iterator::pointer              pointer
 pointer	list.h	/^    typedef Ptr             pointer;$/;"	t	class:__list_iterator
 pointer	list.h	/^    typedef T*                  pointer;$/;"	t	class:list
 pointer	vector.h	/^    typedef value_type* pointer;$/;"	t	class:vector
+pop_back	deque.h	/^    void pop_back()$/;"	f	class:deque
 pop_back	list.h	/^    void pop_back() {$/;"	f	class:list
 pop_back	vector.h	/^    void pop_back() {$/;"	f	class:vector
+pop_front	deque.h	/^    void pop_front()$/;"	f	class:deque
 pop_front	list.h	/^    void pop_front() { erase(begin()); }$/;"	f	class:list
-pop_head	heap.h	/^    inline void pop_head(RandomAccessIterator first, RandomAccessIterator last)$/;"	f
+pop_head	heap.h	/^inline void pop_head(RandomAccessIterator first, RandomAccessIterator last)$/;"	f
 prev	list.h	/^    void_pointer prev;$/;"	m	struct:__list_node
+push_back	deque.h	/^    void push_back(const value_type& t)$/;"	f	class:deque
 push_back	list.h	/^    void push_back(const T& x) { insert(end(), x); }$/;"	f	class:list
 push_back	vector.h	/^    void push_back(const T& x) {$/;"	f	class:vector
+push_back_aux	deque.h	/^void deque<T, Alloc, BufSiz>::push_back_aux(const value_type& t)$/;"	f	class:deque
+push_front	deque.h	/^    void push_front(const value_type& t)$/;"	f	class:deque
 push_front	list.h	/^    void push_front(const T& x) { insert(begin(), x); }$/;"	f	class:list
+push_front_aux	deque.h	/^void deque<T, Alloc, BufSiz>::push_front_aux(const value_type& x)$/;"	f	class:deque
 put_node	list.h	/^    link_type put_node(link_type p) { list_node_allocator::deallocate(p); }$/;"	f	class:list
 random_access_iterator_tag	iterator.h	/^struct random_access_iterator_tag : public forward_iterator_tag {};$/;"	s
 reallocate	malloctor.h	/^    static void* reallocate(void *p, size_t \/* old size*\/ , size_t new_sz) {$/;"	f	class:__malloc_alloc_template
+reference	deque.h	/^    typedef Ref         reference;$/;"	t	struct:__deque_iterator
+reference	deque.h	/^    typedef value_type& reference;$/;"	t	class:deque
 reference	iterator.h	/^    typedef Reference   reference;$/;"	t	struct:iterator
 reference	iterator.h	/^    typedef T&                          reference;$/;"	t	struct:iterator_traits
 reference	iterator.h	/^    typedef const T&                    reference;$/;"	t	struct:iterator_traits
@@ -201,14 +263,21 @@ reference	list.h	/^    typedef T&                  reference;$/;"	t	class:list
 reference	vector.h	/^    typedef value_type& reference;$/;"	t	class:vector
 refill	default_allocator.h	/^void* __default_alloc_template<threads, inst>::refill(size_t n)$/;"	f	class:__default_alloc_template
 remove	list.h	/^void list<T, Alloc>::remove(const T& value)$/;"	f	class:list
+reserve_map_at_back	deque.h	/^    void reserve_map_at_back(size_type nodes_to_add = 1)$/;"	f	class:deque
+reserve_map_at_front	deque.h	/^    void reserve_map_at_front(size_type nodes_to_add = 1)$/;"	f	class:deque
 resize	vector.h	/^    void resize(size_type new_size) { resize(new_size, T()); }$/;"	f	class:vector
 resize	vector.h	/^    void resize(size_type new_size, const T& x) {$/;"	f	class:vector
 reverse	list.h	/^void list<T, Alloc>::reverse() $/;"	f	class:list
+self	deque.h	/^    typedef __deque_iterator self;$/;"	t	struct:__deque_iterator
 self	list.h	/^    typedef __list_iterator<T, Ref, Ptr>    self;$/;"	t	class:__list_iterator
 set_malloc_handler	malloctor.h	/^    static void (* set_malloc_handler(void (*f)()))() {$/;"	f	class:__malloc_alloc_template
-simple_alloc	allocate.h	/^class simple_alloc$/;"	c
+set_node	deque.h	/^    void set_node(map_pointer new_node)$/;"	f	struct:__deque_iterator
+simple_alloc	allocate.h	/^    class simple_alloc$/;"	c
+size	deque.h	/^    size_type size() const { return finish - start; }$/;"	f	class:deque
 size	list.h	/^    size_type size() const {$/;"	f	class:list
 size	vector.h	/^    size_type size() const { return size_type(end() - begin()); }$/;"	f	class:vector
+size_type	deque.h	/^    typedef size_t      size_type;$/;"	t	class:deque
+size_type	deque.h	/^    typedef size_t      size_type;$/;"	t	struct:__deque_iterator
 size_type	list.h	/^    typedef size_t          size_type;$/;"	t	class:__list_iterator
 size_type	list.h	/^    typedef std::ptrdiff_t      size_type;$/;"	t	class:list
 size_type	vector.h	/^    typedef size_t      size_type;$/;"	t	class:vector
@@ -216,6 +285,7 @@ sort	list.h	/^void list<T, Alloc>::sort() $/;"	f	class:list
 splice	list.h	/^    void splice(iterator position, list& x) {$/;"	f	class:list
 splice	list.h	/^    void splice(iterator position, list&, iterator first, iterator last) {$/;"	f	class:list
 splice	list.h	/^    void splice(iterator position, list&, iterator i) {$/;"	f	class:list
+start	deque.h	/^    iterator start;$/;"	m	class:deque
 start	vector.h	/^    iterator start;         \/\/目前使用的空间头部$/;"	m	class:vector
 start_free	default_allocator.h	/^    static char *start_free; \/\/内存池起始位置$/;"	m	class:__default_alloc_template
 start_free	default_allocator.h	/^char *__default_alloc_template<threads, inst>::start_free = 0;$/;"	m	class:__default_alloc_template
@@ -228,6 +298,8 @@ uninitialized_copy	initialized.h	/^uninitialized_copy(const char* first, const c
 uninitialized_copy	initialized.h	/^uninitialized_copy(const wchar_t *first, const wchar_t *last, $/;"	f
 uninitialized_fill	initialized.h	/^uninitialized_fill(InputIterator first, InputIterator last, const T& value)$/;"	f
 unique	list.h	/^void list<T, Alloc>::unique() $/;"	f	class:list
+value_type	deque.h	/^    typedef T           value_type;$/;"	t	class:deque
+value_type	deque.h	/^    typedef T           value_type;$/;"	t	struct:__deque_iterator
 value_type	iterator.h	/^    typedef T                           value_type;$/;"	t	struct:iterator_traits
 value_type	iterator.h	/^    typedef T           value_type;$/;"	t	struct:iterator
 value_type	iterator.h	/^    typedef typename Iterator::value_type           value_type;$/;"	t	struct:iterator_traits
