@@ -72,7 +72,6 @@ int main()
 
     deq.push_back(1);
     deq.push_front(231);
-    deq.push_back(333);
     deq.push_back(455);
  
     for (auto i = deq.begin(); i != deq.end(); i++)

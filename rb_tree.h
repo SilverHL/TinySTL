@@ -524,7 +524,7 @@ __rb_tree_rebalance_for_erase(__rb_tree_node_base* z,
         y->left = z->left;
         if (y != z->right)
         {
-            x->parent = y->parent;
+            x_parent = y->parent;
             if (x)
                 x->parent = y->parent;
             y->parent->left = x; //x顶上y的位置
@@ -533,7 +533,7 @@ __rb_tree_rebalance_for_erase(__rb_tree_node_base* z,
         }
         else   //如果 y是z的右孩子 即一开始的时候y的左孩子是0
                 //那么直接让x指向y  
-            x->parent = y;    
+            x_parent = y;    
         //接管z的上下文
         if (root == z)
             root = y;
@@ -548,27 +548,142 @@ __rb_tree_rebalance_for_erase(__rb_tree_node_base* z,
     }
     else
     {
-        x->parent = y->parent;
+        //此时 x应该要去替代z的位置
+        x_parent = y->parent;
         if (x)
             x->parent = y->parent;
+        //x取代z的上下文
         if (root == z)
-            root = x;
+            root = x;  
         else 
             if (z->parent->left == z)
                 z->parent->left = x;
             else 
                 z->parent->right = x;
+
+        //如果z是极大或极小值
+        //那么也要相应的更新
         if (leftmost == z)
-            if (z->right == 0)
+        {
+            if (z->right == 0) //此时 right为0 x对应的应该是z的right
                 leftmost = z->parent;
-            else 
+            else   //否则 x应该指向z的left
                 leftmost = __rb_tree_node_base::minimum(x);
+        }
         if (rightmost == z)
-            if (z->left == 0)
+        {
+            if (z->left == 0) //此时 left为0 x指向z的left
                 rightmost = z->parent;
-            else 
+            else        //此时x指向z的right
                 rightmost = __rb_tree_node_base::maximum(x);
+        }
     }
+
+    //y不为红色 不可以直接删除 让x顶上
+    if (y->color != __rb_tree_red)
+    {
+        //此时 x的分支相对于兄弟w少了一个黑色节点
+        while (x != root && (x == 0 || x->color == __rb_tree_black))
+            if (x == x_parent->left)
+            {
+                //找到x的兄弟节点
+                __rb_tree_node_base* w = x_parent->right;
+                if (w->color == __rb_tree_red) //如果为红色
+                {
+                    w->color = __rb_tree_black;//将其变成黑色 
+                    x_parent->color = __rb_tree_red; //父节点变为红色 
+                    __rb_tree_rotate_left(x_parent, root);
+                    w = x_parent->right;
+                }
+
+                //如果兄弟w的两个儿子都为黑色
+                if ((w->left == 0 || 
+                     w->left->color == __rb_tree_black) && 
+                    (w->right == 0 || 
+                     w->right->color == __rb_tree_black))
+                {
+                    //将w的颜色改成红色 
+                    //并上溯
+                    w->color = __rb_tree_red;
+                    x = x_parent;
+                    x_parent = x_parent->parent;
+                } 
+                else 
+                {
+                    //如果w的右孩子为黑色 左孩子的红色
+                    if (w->right == 0 || 
+                        w->right->color == __rb_tree_black)
+                    {
+                        w->color = __rb_tree_red;
+                        //将左孩子改成黑色 并右旋
+                        if (w->left != 0)
+                            w->left->color = __rb_tree_black;
+                        __rb_tree_rotate_right(w, root);
+                        w = x_parent->right;
+                    }
+                    //此时一定是左孩子为黑色 
+                    //右孩子为红色 
+                    //此时将右孩子改为黑色
+                    //以x_parent为节点左旋
+                    //结束以后 
+                    //原w的右孩子 新增一个黑色节点
+                    //原w的左孩子被转移到x_parent的右孩子下 
+                    //而x_parent成为 原x 与 原w 的左孩子的新父母 
+                    //为x以及原w左孩子新增一个黑色节点 即它本身
+                    w->color = x_parent->color;
+                    x->parent->color = __rb_tree_black;
+                    if (w->right)
+                        w->right->color = __rb_tree_black;
+                    __rb_tree_rotate_left(x_parent, root);
+                    break;
+                }
+            }
+            else //x是parent的右节点 同上面相同
+            {
+                __rb_tree_node_base* w = x_parent->left;
+                if (w->color == __rb_tree_red)
+                {
+                    w->color = __rb_tree_black;
+                    x_parent->color = __rb_tree_red;
+                    __rb_tree_rotate_left(x_parent, root);
+                    w = x_parent->left;
+                }
+
+                if ((w->left == 0 || 
+                     w->left->color == __rb_tree_black) && 
+                    (w->right == 0 ||
+                     w->right->color == __rb_tree_black))
+                {
+                    w->color = __rb_tree_red;
+                    x = x_parent;
+                    x_parent = x_parent->parent;
+                } 
+                else 
+                {
+                    if (w->left == 0 || 
+                        w->left->color == __rb_tree_black)
+                    {
+                        w->color = __rb_tree_red;
+                        if (w->right != 0)
+                            w->right->color = __rb_tree_black;
+                        __rb_tree_rotate_left(w, root);
+                        w = x_parent->left;
+                    }
+
+                    w->color = x_parent->color;
+                    x_parent->color = __rb_tree_black;
+                    if (w->left)
+                        w->left->color = __rb_tree_black;
+                    __rb_tree_rotate_right(x_parent, root);
+                    break;
+                }
+
+            }
+        if (x)
+            x->color = __rb_tree_black;
+    }
+
+    return y;
 }
 template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
 void 
@@ -595,6 +710,7 @@ void rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::erase(
     destroy_node(y);
     --node_count;
 }
+
 template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
 typename rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator
 rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::find(const Key& k)
