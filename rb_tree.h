@@ -278,12 +278,15 @@ public:
     void insert_unique(const_iterator first, const_iterator last);
     iterator insert_equal(const value_type& x);
     iterator find(const Key& k);
+    size_type count(const key_type& x) const;
 
     iterator lower_bound(const key_type& x);
     const_iterator lower_bound(const key_type& x) const;
 
     iterator upper_bound(const key_type& x);
     const_iterator upper_bound(const key_type& x) const;
+
+    std::pair<iterator, iterator>equal_range(const key_type& x) const;
 };
 
 template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
@@ -813,6 +816,57 @@ rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::upper_bound(const key_type& k) 
             x = right(x);
 
     return const_iterator(y);
+}
+
+template <class Key, class Value, class KeyOfValue, 
+          class Compare, class Alloc>
+rb_tree<Key, Value, KeyOfValue, Compare, Alloc>&
+rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::
+operator=(const rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& x)
+{
+    if (*this != x)
+    {
+        clear();
+
+        node_count = 0;
+        key_compare = x.key_compare;
+        if (x.root() == 0)
+        {
+            root() = 0;
+            leftmost() = header;
+            rightmost() = header;
+        }
+        else
+        {
+            //root = copy(x.root(), header);
+            leftmost() = minimum(root());
+            rightmost() = maximum(root());
+            node_count = x.node_count;
+        }
+    }
+    return *this;
+}
+
+template <class Key, class Value, class KeyOfValue, 
+          class Compare, class Alloc>
+inline
+std::pair<typename rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator, 
+          typename rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator>
+rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::equal_range(const key_type& x) const
+{
+    return std::pair<const_iterator, const_iterator>(lower_bound(x), 
+                                                upper_bound(x));
+}
+
+template <class Key, class Value, class KeyOfValue, 
+          class Compare, class Alloc>
+typename rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::size_type
+rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::count(const key_type& x) const
+{
+    std::pair<const_iterator, const_iterator> p = equal_range(x);
+    size_type n = 0;
+    distance(p.first, p.second, n);
+    return n;
 }
 #endif
 
