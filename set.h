@@ -1,3 +1,4 @@
+#pragma once
 #ifndef _SET_H_
 #define _SET_H_
 
@@ -58,6 +59,69 @@ public:
     bool empty() const { return t.empty(); }
     size_type size() const { return t.size(); }
     size_type max_size() const { return t.max_size(); }
+    void swap(set<Key, Compare, Alloc>& x) { t.swap(x); }
+
+    typedef std::pair<iterator, bool> pair_iterator_bool;
+
+    std::pair<iterator, bool> insert(const value_type& x) 
+    {
+        std::pair<typename rep_type::iterator, bool> p = 
+            t.insert_unique(x);
+        return std::pair<iterator, bool>(p.first, p.second);
+    }
+
+    iterator insert(iterator position, const value_type& x)
+    {
+        typedef typename rep_type::iterator rep_iterator;
+        return t.insert_unique((rep_iterator&)position, x);
+    }
+
+    template<class InputIterator>
+        void insert(InputIterator first, InputIterator last)
+        {   
+            t.insert_unique(first, last);
+        }
+
+    void erase(iterator position)
+    {
+        typedef typename rep_type::iterator rep_iterator;
+        t.erase((rep_iterator&)position);
+    }
+
+    size_type erase(const key_type& x)
+    {
+        return t.rease(x);
+    }
+
+    void erase(iterator first, iterator last){
+        typedef typename rep_type::iterator rep_iterator;
+        t.erase((rep_iterator&)first, (rep_iterator&)last);
+    }
+
+    void clear() { t.clear(); }
+
+    //set operations
+    iterator find(const key_type& x) const { return t.find(x); }
+    size_type count(const key_type& x) const { return t.count(x); }
+    iterator lower_bound(const key_type& x) const { return t.lower_bound(x); }
+    iterator upper_bound(const key_type& x) const { return t.upper_bound(x); }
+
+    friend bool operator== (const set&, const set&);
+    friend bool operator< (const set&, const set&);
 };
+
+template <class Key, class Compare, class Alloc>
+inline bool operator==(const set<Key, Compare, Alloc>& x,
+                       const set<Key, Compare, Alloc>& y)
+{
+    return x.t == y.t;
+}
+
+template <class Key, class Compare, class Alloc>
+inline bool operator<(const set<Key, Compare, Alloc>& x,
+                      const set<Key, Compare, Alloc>& y)
+{
+    return x.t < y.t;
+}
 
 #endif

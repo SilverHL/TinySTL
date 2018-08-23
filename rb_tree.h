@@ -278,6 +278,12 @@ public:
     void insert_unique(const_iterator first, const_iterator last);
     iterator insert_equal(const value_type& x);
     iterator find(const Key& k);
+
+    iterator lower_bound(const key_type& x);
+    const_iterator lower_bound(const key_type& x) const;
+
+    iterator upper_bound(const key_type& x);
+    const_iterator upper_bound(const key_type& x) const;
 };
 
 template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
@@ -728,13 +734,85 @@ rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::find(const Key& k)
     link_type x = root();
 
     while (x != 0)
-        if (!key_compare(key(x), k))
+        if (!key_compare(key(x), k)) //key_compare默认是x < y 如果x >= k 就往左走
             y = x, x = left(x);
         else 
             x = right(x);
     iterator j = iterator(y);
     return (j == end() || key_compare(k, key(j.node))) ? end() : j; 
 }
+ 
+/***
+ * key_compare默认是x < y 要找lower_bound
+ * 就要找第一个小于等于k的值 
+ * **/
+template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
+typename rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator
+rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::lower_bound(const key_type& k)
+{
+    link_type y = header;
+    link_type x = root();
 
+    while (x != 0) 
+        if (!key_compare(key(x), k))            
+            y = x, x = left(x);
+        else 
+            x = right(x);
+
+    return iterator(y);
+}
+
+template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
+typename rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::const_iterator
+rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::lower_bound(const key_type& k) const
+{
+    link_type y = header;
+    link_type x = root();
+
+    while (x != 0)
+        if (!key_compare(key(x), k))
+            y = x, x = left(x);
+        else 
+            x = right(x);
+
+    return const_iterator(y);
+}
+/***
+ * upper_bound是找第一个大于k的位置
+ * k < key(x)就往左走
+ * 如果相等 就找第一个大于k的值
+ * ***/
+template <class Key, class Value, class KeyOfValue, 
+          class Compare, class Alloc>
+typename rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator
+rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::upper_bound(const key_type& k)
+{
+    link_type y = header;
+    link_type x = root();
+     
+    while (x != 0) 
+        if (key_compare(key(x), k))
+            y = x, x = left(x);
+        else 
+            x = right(x);
+    
+    return iterator(y);
+}
+
+template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
+typename rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::const_iterator
+rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::upper_bound(const key_type& k) const
+{
+    link_type y = header;
+    link_type x = root();
+
+    while (x != 0)
+        if (key_compare(k, key(x)))
+            y = x, x = left(x);
+        else 
+            x = right(x);
+
+    return const_iterator(y);
+}
 #endif
 
