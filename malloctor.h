@@ -37,6 +37,7 @@ public:
         void *result = realloc(p, new_sz);
         if (0 == result) 
             oom_realloc(p, new_sz);
+        return result;
     }
 
     //类比 set_new_handler

@@ -236,6 +236,7 @@ protected:
 
 public:
     typedef __rb_tree_iterator<value_type, reference, pointer> iterator;
+    typedef __rb_tree_iterator<value_type, const_reference, const_pointer> const_iterator;
 
 private:
     iterator __insert(base_ptr x, base_ptr y, const value_type& v);
@@ -274,6 +275,7 @@ public:
     void clear();
 public:
     std::pair<iterator, bool> insert_unique(const value_type& x);
+    void insert_unique(const_iterator first, const_iterator last);
     iterator insert_equal(const value_type& x);
     iterator find(const Key& k);
 };
@@ -338,6 +340,13 @@ rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::insert_unique(const Value& v)
     return std::pair<iterator, bool>(j, false);
 }
 
+template <class Key, class Value, class KeyOfValue, class Comp, class Alloc>
+void rb_tree<Key, Value, KeyOfValue, Comp, Alloc>::
+                insert_unique(const_iterator first, const_iterator last)
+{
+    for ( ; first != last; first++ )
+        insert_unique(*first);
+}
 /***
  * x 要插入的节点
  * y 要插入的父节点
