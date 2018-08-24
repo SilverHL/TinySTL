@@ -10,11 +10,14 @@ FREELIST_INDEX	default_allocator.h	/^    static size_t FREELIST_INDEX(size_t byt
 ROUND_UP	default_allocator.h	/^    static size_t ROUND_UP(size_t bytes){$/;"	f	class:__default_alloc_template
 _DEQUE_H_	deque.h	2;"	d
 _EXCEPTION_H_	exception.h	3;"	d
+_HASHTABLE_H_	hashtable.h	3;"	d
 _HEAP_H	heap.h	3;"	d
 _INITIALIZED_H	initialized.h	3;"	d
 _ITERATOR_H	iterator.h	3;"	d
 _LIST_H	list.h	3;"	d
+_MAP_H_	map.h	3;"	d
 _RB_TREE_	rb_tree.h	3;"	d
+_SET_H_	set.h	3;"	d
 _TYPE_TRAITS_	type_traits.h	3;"	d
 _VECTOR_H_	vector.h	3;"	d
 __ALIGN	default_allocator.h	/^enum {__ALIGN = 8};$/;"	e	enum:__anon1
@@ -47,6 +50,12 @@ __destroy_aux	construct.h	/^inline void __destroy_aux(ForwardIterator, ForwardIt
 __distance	iterator.h	/^__distance(InputIterator first, InputIterator last, input_iterator_tag)$/;"	f
 __distance	iterator.h	/^__distance(RandomAccessIterator first, RandomAccessIterator last, $/;"	f
 __false_type	type_traits.h	/^struct __false_type {};$/;"	s
+__hashtable_const_iterator	hashtable.h	/^    __hashtable_const_iterator(node* n, hashtable* tab) :$/;"	f	struct:__hashtable_const_iterator
+__hashtable_const_iterator	hashtable.h	/^struct __hashtable_const_iterator$/;"	s
+__hashtable_iterator	hashtable.h	/^    __hashtable_iterator() {}$/;"	f	struct:__hashtable_iterator
+__hashtable_iterator	hashtable.h	/^    __hashtable_iterator(node* n, hashtable* tab) : cur(n), ht(tab) {}$/;"	f	struct:__hashtable_iterator
+__hashtable_iterator	hashtable.h	/^struct __hashtable_iterator $/;"	s
+__hashtable_node	hashtable.h	/^struct __hashtable_node$/;"	s
 __insert	rb_tree.h	/^__insert(base_ptr x_, base_ptr y_, const value_type& v)$/;"	f	class:rb_tree
 __list_iterator	list.h	/^    __list_iterator() {}$/;"	f	class:__list_iterator
 __list_iterator	list.h	/^    __list_iterator(const iterator& x) : node(x.node) {}$/;"	f	class:__list_iterator
@@ -73,6 +82,9 @@ __rb_tree_rebalance_for_erase	rb_tree.h	/^__rb_tree_rebalance_for_erase(__rb_tre
 __rb_tree_red	rb_tree.h	/^const __rb_tree_color_type __rb_tree_red = false; \/\/红色$/;"	v
 __rb_tree_rotate_left	rb_tree.h	/^__rb_tree_rotate_left(__rb_tree_node_base* x,$/;"	f
 __rb_tree_rotate_right	rb_tree.h	/^inline void __rb_tree_rotate_right(__rb_tree_node_base* x,$/;"	f
+__stl_next_prime	hashtable.h	/^inline unsigned long __stl_next_prime(unsigned long n)$/;"	f
+__stl_num_primes	hashtable.h	/^static const int __stl_num_primes = 15;$/;"	v
+__stl_prime_list	hashtable.h	/^static const unsigned long __stl_prime_list[__stl_num_primes] = $/;"	v
 __true_type	type_traits.h	/^struct __true_type {};$/;"	s
 __type_traits	type_traits.h	/^__STL_TEMPLATE_NULL struct __type_traits<char> {$/;"	s
 __type_traits	type_traits.h	/^__STL_TEMPLATE_NULL struct __type_traits<double> {$/;"	s
@@ -113,14 +125,26 @@ base_ptr	rb_tree.h	/^    typedef __rb_tree_node_base* base_ptr;$/;"	t	struct:__r
 base_ptr	rb_tree.h	/^    typedef __rb_tree_node_base::base_ptr base_ptr;$/;"	t	struct:__rb_tree_base_iterator
 begin	deque.h	/^    iterator begin() { return start; }$/;"	f	class:deque
 begin	list.h	/^    iterator begin() { return (link_type)((*node).next); }$/;"	f	class:list
+begin	map.h	/^    const_iterator begin() const { return t.begin(); }$/;"	f	class:map
+begin	map.h	/^    iterator begin() { return t.begin(); }$/;"	f	class:map
 begin	rb_tree.h	/^    iterator begin() { return leftmost(); }$/;"	f	class:rb_tree
+begin	set.h	/^    iterator begin() const { return t.begin(); }$/;"	f	class:set
 begin	vector.h	/^    iterator begin() const { return start; }$/;"	f	class:vector
 bidirectional_iterator_tag	iterator.h	/^struct bidirectional_iterator_tag : public forward_iterator_tag {};$/;"	s
+btk_num	hashtable.h	/^    size_type btk_num(const value_type& obj) const$/;"	f	class:hashtable_
+btk_num	hashtable.h	/^    size_type btk_num(const value_type& obj, size_t n) const$/;"	f	class:hashtable_
+btk_num_key	hashtable.h	/^    size_type btk_num_key(const key_type& key) const$/;"	f	class:hashtable_
+btk_num_key	hashtable.h	/^    size_type btk_num_key(const key_type& key, size_t n) const$/;"	f	class:hashtable_
+bucket_count	hashtable.h	/^    size_type bucket_count() const { return buckets.size(); }$/;"	f	class:hashtable_
+buckets	hashtable.h	/^    vector<node*, Alloc> buckets;$/;"	m	class:hashtable_
 buffer_size	deque.h	/^    static size_t buffer_size() { return __deque_buf_size(BufSize, sizeof(T)); }$/;"	f	struct:__deque_iterator
 capacity	vector.h	/^    size_type capacity() const$/;"	f	class:vector
 chunk_alloc	default_allocator.h	/^chunk_alloc(size_t size, int &nobjs) $/;"	f	class:__default_alloc_template
 clear	deque.h	/^void deque<T, Alloc, BufSiz>::clear()$/;"	f	class:deque
+clear	hashtable.h	/^void hashtable_<V, K, HF, Ex, Eq, A>::clear()$/;"	f	class:hashtable_
 clear	list.h	/^void list<T, Alloc>::clear()$/;"	f	class:list
+clear	map.h	/^    void clear() { t.clear(); }$/;"	f	class:map
+clear	set.h	/^    void clear() { t.clear(); }$/;"	f	class:set
 clear	vector.h	/^    void clear() { erase(begin(), end()); }$/;"	f	class:vector
 client_data	default_allocator.h	/^        char client_data[1];$/;"	m	union:__default_alloc_template::obj
 clone_node	rb_tree.h	/^    link_type clone_node(link_type x)$/;"	f	class:rb_tree
@@ -129,18 +153,37 @@ color	rb_tree.h	/^    static color_type& color(base_ptr x)$/;"	f	class:rb_tree
 color	rb_tree.h	/^    static color_type& color(link_type x)$/;"	f	class:rb_tree
 color_type	rb_tree.h	/^    typedef __rb_tree_color_type color_type;$/;"	t	class:rb_tree
 color_type	rb_tree.h	/^    typedef __rb_tree_color_type color_type;$/;"	t	struct:__rb_tree_node_base
+comp	map.h	/^        Compare comp;$/;"	m	class:map::value_compare
 const_iterator	deque.h	/^    typedef __deque_iterator<T, const T&, const T*, BufSize> const_iterator;$/;"	t	struct:__deque_iterator
+const_iterator	hashtable.h	/^                        const_iterator;$/;"	t	class:hashtable_
+const_iterator	hashtable.h	/^                const_iterator;$/;"	t	struct:__hashtable_const_iterator
+const_iterator	hashtable.h	/^            const_iterator;$/;"	t	struct:__hashtable_iterator
+const_iterator	map.h	/^    typedef typename rep_type::const_iterator   const_iterator;$/;"	t	class:map
 const_iterator	rb_tree.h	/^    typedef __rb_tree_iterator<Value, const Value&, const Value*>   const_iterator;$/;"	t	struct:__rb_tree_iterator
+const_iterator	rb_tree.h	/^    typedef __rb_tree_iterator<value_type, const_reference, const_pointer> const_iterator;$/;"	t	class:rb_tree
+const_iterator	set.h	/^    typedef typename rep_type::const_iterator   const_iterator;$/;"	t	class:set
+const_pointer	map.h	/^    typedef typename rep_type::const_pointer    const_pointer;$/;"	t	class:map
 const_pointer	rb_tree.h	/^    typedef const value_type*   const_pointer;$/;"	t	class:rb_tree
+const_pointer	set.h	/^    typedef typename rep_type::const_pointer    const_pointer;$/;"	t	class:set
+const_reference	map.h	/^    typedef typename rep_type::const_reference  const_reference;$/;"	t	class:map
 const_reference	rb_tree.h	/^    typedef const value_type&   const_reference;$/;"	t	class:rb_tree
+const_reference	set.h	/^    typedef typename rep_type::const_reference  const_reference;$/;"	t	class:set
 construct	construct.h	/^inline void construct(T1* p, const T2& value)$/;"	f
+copy_from	hashtable.h	/^void hashtable_<V, K, HF, Ex, Eq, A>::copy_from(const hashtable_& ht)$/;"	f	class:hashtable_
+count	hashtable.h	/^    size_type count(const key_type& x) const$/;"	f	class:hashtable_
+count	map.h	/^    size_type count(const key_type& x) const { return t.count(x); }$/;"	f	class:map
+count	rb_tree.h	/^rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::count(const key_type& x) const$/;"	f	class:rb_tree
+count	set.h	/^    size_type count(const key_type& x) const { return t.count(x); }$/;"	f	class:set
 create_map_and_nodes	deque.h	/^void deque<T, Alloc, BufSiz>::create_map_and_nodes(size_type num_elements)$/;"	f	class:deque
 create_node	list.h	/^    link_type create_node(const T& x) {$/;"	f	class:list
 create_node	rb_tree.h	/^    link_type create_node(const value_type& x) $/;"	f	class:rb_tree
 cur	deque.h	/^    T* cur;$/;"	m	struct:__deque_iterator
+cur	hashtable.h	/^    const node* cur;$/;"	m	struct:__hashtable_const_iterator
+cur	hashtable.h	/^    node* cur;$/;"	m	struct:__hashtable_iterator
 data	list.h	/^    T data;$/;"	m	struct:__list_node
 data_allocator	deque.h	/^    typedef simple_alloc<value_type, Alloc> data_allocator;$/;"	t	class:deque
 data_allocator	vector.h	/^    typedef simple_alloc<value_type, Alloc> data_allocator;$/;"	t	class:vector
+data_type	map.h	/^    typedef T                       data_type;$/;"	t	class:map
 deallocate	allocate.h	/^        static void deallocate(T *p) {$/;"	f	class:simple_alloc
 deallocate	allocate.h	/^        static void deallocate(T *p, size_t n) {$/;"	f	class:simple_alloc
 deallocate	default_allocator.h	/^    static void deallocate(void *p, size_t n) {$/;"	f	class:__default_alloc_template
@@ -149,6 +192,7 @@ deallocate	vector.h	/^    void deallocate() {$/;"	f	class:vector
 deallocate_node	deque.h	/^    void deallocate_node(value_type *node)$/;"	f	class:deque
 decrement	rb_tree.h	/^    void decrement()$/;"	f	struct:__rb_tree_base_iterator
 default_alloc	allocate.h	/^typedef __default_alloc_template<0, 0> default_alloc;$/;"	t
+delete_node	hashtable.h	/^    void delete_node(node* n)$/;"	f	class:hashtable_
 deque	deque.h	/^    deque() $/;"	f	class:deque
 deque	deque.h	/^    deque(int n, const value_type& value) $/;"	f	class:deque
 deque	deque.h	/^class deque$/;"	c
@@ -160,36 +204,59 @@ destroy_node	list.h	/^    void destroy_node(link_type p) {$/;"	f	class:list
 destroy_node	rb_tree.h	/^    void destroy_node(link_type node)$/;"	f	class:rb_tree
 difference_type	deque.h	/^    typedef ptrdiff_t   difference_type;$/;"	t	class:deque
 difference_type	deque.h	/^    typedef ptrdiff_t   difference_type;$/;"	t	struct:__deque_iterator
+difference_type	hashtable.h	/^    typedef ptrdiff_t               difference_type;$/;"	t	struct:__hashtable_const_iterator
+difference_type	hashtable.h	/^    typedef ptrdiff_t difference_type;$/;"	t	struct:__hashtable_iterator
 difference_type	iterator.h	/^    typedef Distance    difference_type;$/;"	t	struct:iterator
 difference_type	iterator.h	/^    typedef std::ptrdiff_t              difference_type;$/;"	t	struct:iterator_traits
 difference_type	iterator.h	/^    typedef typename Iterator::difference_type      difference_type;$/;"	t	struct:iterator_traits
 difference_type	list.h	/^    typedef std::ptrdiff_t       difference_type;$/;"	t	class:__list_iterator
+difference_type	map.h	/^    typedef typename rep_type::difference_type  difference_type;$/;"	t	class:map
 difference_type	rb_tree.h	/^    typedef ptrdiff_t           difference_type;$/;"	t	class:rb_tree
 difference_type	rb_tree.h	/^    typedef ptrdiff_t difference_type;$/;"	t	struct:__rb_tree_base_iterator
+difference_type	set.h	/^    typedef typename rep_type::difference_type  difference_type;$/;"	t	class:set
 difference_type	vector.h	/^    typedef ptrdiff_t   difference_type;$/;"	t	class:vector
 distance	iterator.h	/^distance(InputIterator first, InputIterator last)$/;"	f
 distance_type	iterator.h	/^distance_type(const Iterator&) $/;"	f
 empty	deque.h	/^    bool empty() const { return finish == start; }$/;"	f	class:deque
 empty	list.h	/^    bool empty() const { return node->next == node; }$/;"	f	class:list
+empty	map.h	/^    bool empty() const { return t.empty(); }$/;"	f	class:map
 empty	rb_tree.h	/^    bool empty() const { return node_count == 0; } $/;"	f	class:rb_tree
+empty	set.h	/^    bool empty() const { return t.empty(); }$/;"	f	class:set
 empty	vector.h	/^    bool empty() const { return begin() == end(); }$/;"	f	class:vector
 empty_inisialize	list.h	/^    void empty_inisialize() {$/;"	f	class:list
 end	deque.h	/^    iterator end() { return finish; }$/;"	f	class:deque
 end	list.h	/^    iterator end() { return node; }$/;"	f	class:list
+end	map.h	/^    const_iterator end() const { return t.end(); }$/;"	f	class:map
+end	map.h	/^    iterator end() { return t.end(); }$/;"	f	class:map
 end	rb_tree.h	/^    iterator end() { return header; }$/;"	f	class:rb_tree
+end	set.h	/^    iterator end() const { return t.end(); }$/;"	f	class:set
 end	vector.h	/^    iterator end() const { return finish; }$/;"	f	class:vector
 end_free	default_allocator.h	/^    static char *end_free;$/;"	m	class:__default_alloc_template
 end_free	default_allocator.h	/^char *__default_alloc_template<threads, inst>::end_free = 0;$/;"	m	class:__default_alloc_template
 end_of_storage	vector.h	/^    iterator end_of_storage; \/\/目前可用的空间尾$/;"	m	class:vector
+equal_range	map.h	/^    std::pair<const_iterator, const_iterator> equal_range(const key_type& x) const$/;"	f	class:map
+equal_range	map.h	/^    std::pair<iterator, iterator> equal_range(const key_type& x) $/;"	f	class:map
+equal_range	rb_tree.h	/^rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::equal_range(const key_type& x) const$/;"	f	class:rb_tree
+equals	hashtable.h	/^    key_equal   equals;$/;"	m	class:hashtable_
 erase	deque.h	/^deque<T, Alloc, BufSiz>::erase(iterator first, iterator last)$/;"	f	class:deque
 erase	list.h	/^    iterator erase(iterator position) {$/;"	f	class:list
+erase	map.h	/^    size_type erase(const key_type&x) { return t.erase(x); }$/;"	f	class:map
+erase	map.h	/^    void erase(iterator first, iterator last) { t.erase(first, last); }$/;"	f	class:map
+erase	map.h	/^    void erase(iterator position) { t.erase(position); }$/;"	f	class:map
 erase	rb_tree.h	/^rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::erase(link_type x)$/;"	f	class:rb_tree
 erase	rb_tree.h	/^void rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::erase($/;"	f	class:rb_tree
+erase	set.h	/^    size_type erase(const key_type& x)$/;"	f	class:set
+erase	set.h	/^    void erase(iterator first, iterator last){$/;"	f	class:set
+erase	set.h	/^    void erase(iterator position)$/;"	f	class:set
 erase	vector.h	/^    iterator erase(iterator first, iterator last) {$/;"	f	class:vector
 erase	vector.h	/^    iterator erase(iterator position) {$/;"	f	class:vector
 fill_initialize	vector.h	/^    void fill_initialize(size_type n, const T& value) {$/;"	f	class:vector
 fill_initialized	deque.h	/^void deque<T, Alloc, BufSiz>::fill_initialized(size_type n, $/;"	f	class:deque
+find	hashtable.h	/^    iterator find(const key_type& x) const$/;"	f	class:hashtable_
+find	map.h	/^    const_iterator find(const key_type& x) const { return t.find(x); }$/;"	f	class:map
+find	map.h	/^    iterator find(const key_type& x) { return t.find(x); }$/;"	f	class:map
 find	rb_tree.h	/^rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::find(const Key& k)$/;"	f	class:rb_tree
+find	set.h	/^    iterator find(const key_type& x) const { return t.find(x); }$/;"	f	class:set
 finish	deque.h	/^    iterator finish;$/;"	m	class:deque
 finish	vector.h	/^    iterator finish;        \/\/目前使用的空间尾$/;"	m	class:vector
 first	deque.h	/^    T* first;$/;"	m	struct:__deque_iterator
@@ -200,6 +267,7 @@ free_list_link	default_allocator.h	/^        union obj * free_list_link;$/;"	m	u
 front	deque.h	/^    reference front() { return *start; }$/;"	f	class:deque
 front	list.h	/^    reference front() { return *begin(); }$/;"	f	class:list
 front	vector.h	/^    reference front() { return *begin(); }$/;"	f	class:vector
+get_key	hashtable.h	/^    ExtractKey  get_key;$/;"	m	class:hashtable_
 get_node	list.h	/^    link_type get_node() { return list_node_allocator::allocate(); }$/;"	f	class:list
 get_node	rb_tree.h	/^    link_type get_node() { return rb_tree_node_allocator::allocate(); }$/;"	f	class:rb_tree
 has_trivial_assignment_operator	type_traits.h	/^    typedef __false_type    has_trivial_assignment_operator;$/;"	t	struct:__type_traits
@@ -210,31 +278,57 @@ has_trivial_default_construct	type_traits.h	/^    typedef __false_type    has_tr
 has_trivial_default_constructor	type_traits.h	/^    typedef __true_type     has_trivial_default_constructor;$/;"	t	struct:__type_traits
 has_trivial_destructor	type_traits.h	/^    typedef __false_type    has_trivial_destructor;$/;"	t	struct:__type_traits
 has_trivial_destructor	type_traits.h	/^    typedef __true_type     has_trivial_destructor;$/;"	t	struct:__type_traits
+hash	hashtable.h	/^    hasher      hash;$/;"	m	class:hashtable_
+hasher	hashtable.h	/^    typedef HashFcn     hasher;$/;"	t	class:hashtable_
+hashtable	hashtable.h	/^    typedef hashtable_<Value, Key, HashFcn, ExtractKey, EqualKey, Alloc> hashtable;$/;"	t	struct:__hashtable_const_iterator
+hashtable	hashtable.h	/^    typedef hashtable_<Value, Key, HashFcn, ExtractKey, EqualKey, Alloc> hashtable;$/;"	t	struct:__hashtable_iterator
+hashtable_	hashtable.h	/^    hashtable_(size_type n, $/;"	f	class:hashtable_
+hashtable_	hashtable.h	/^class hashtable_$/;"	c
 header	rb_tree.h	/^    link_type header;$/;"	m	class:rb_tree
 heap_size	default_allocator.h	/^    static size_t heap_size; $/;"	m	class:__default_alloc_template
 heap_size	default_allocator.h	/^size_t __default_alloc_template<threads, inst>::heap_size = 0;$/;"	m	class:__default_alloc_template
+ht	hashtable.h	/^    const hashtable* ht;$/;"	m	struct:__hashtable_const_iterator
+ht	hashtable.h	/^    hashtable* ht;$/;"	m	struct:__hashtable_iterator
 increment	rb_tree.h	/^    void increment()$/;"	f	struct:__rb_tree_base_iterator
 init	rb_tree.h	/^    void init()$/;"	f	class:rb_tree
 initial_map_size	deque.h	/^    enum _initial_map_size { initial_map_size = 8 };$/;"	e	enum:deque::_initial_map_size
+initialize_buckets	hashtable.h	/^    void initialize_buckets(size_type n)$/;"	f	class:hashtable_
 input_iterator_tag	iterator.h	/^struct input_iterator_tag {};$/;"	s
 insert	deque.h	/^    iterator insert(iterator position, const value_type& x)$/;"	f	class:deque
 insert	list.h	/^    iterator insert(iterator position, const T& x) {$/;"	f	class:list
+insert	map.h	/^        void insert(InputIterator first, InputIterator last)$/;"	f	class:map
+insert	map.h	/^    iterator insert(iterator position, const value_type& x)$/;"	f	class:map
+insert	map.h	/^    std::pair<iterator, bool> insert(const value_type& x) $/;"	f	class:map
+insert	set.h	/^        void insert(InputIterator first, InputIterator last)$/;"	f	class:set
+insert	set.h	/^    iterator insert(iterator position, const value_type& x)$/;"	f	class:set
+insert	set.h	/^    std::pair<iterator, bool> insert(const value_type& x) $/;"	f	class:set
 insert	vector.h	/^void vector<T, Alloc>::insert(iterator position, size_type n, const T& x)$/;"	f	class:vector
 insert_aux	deque.h	/^deque<T, Alloc, BufSiz>::insert_aux(iterator pos, const value_type& x)$/;"	f	class:deque
 insert_aux	vector.h	/^void vector<T, Alloc>::insert_aux(iterator position, const T& x) $/;"	f	class:vector
+insert_equal	hashtable.h	/^    iterator insert_equal(const value_type& obj)$/;"	f	class:hashtable_
 insert_equal	rb_tree.h	/^rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::insert_equal(const Value& v)$/;"	f	class:rb_tree
+insert_equal_noresize	hashtable.h	/^hashtable_<V, K, HF, Ex, Eq, A>::insert_equal_noresize(const value_type& obj)$/;"	f	class:hashtable_
+insert_unique	hashtable.h	/^    pair<iterator, bool> insert_unique(const value_type& obj)$/;"	f	class:hashtable_
+insert_unique	rb_tree.h	/^                insert_unique(const_iterator first, const_iterator last)$/;"	f	class:rb_tree
 insert_unique	rb_tree.h	/^rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::insert_unique(const Value& v)$/;"	f	class:rb_tree
+insert_unique_noresize	hashtable.h	/^hashtable_<V, K, HF, Ex, Eq, A>::insert_unique_noresize(const value_type& obj)$/;"	f	class:hashtable_
 is_POD_TYPE	type_traits.h	/^    typedef __true_type     is_POD_TYPE;$/;"	t	struct:__type_traits
 is_POD_type	type_traits.h	/^    typedef __false_type    is_POD_type;$/;"	t	struct:__type_traits
 iterator	deque.h	/^    typedef __deque_iterator<T, T&, T*, BufSiz> iterator;$/;"	t	class:deque
 iterator	deque.h	/^    typedef __deque_iterator<T, T&, T*, BufSize>    iterator;$/;"	t	struct:__deque_iterator
+iterator	hashtable.h	/^                        iterator;$/;"	t	class:hashtable_
+iterator	hashtable.h	/^            iterator;$/;"	t	struct:__hashtable_iterator
 iterator	iterator.h	/^struct iterator {$/;"	s
 iterator	list.h	/^    typedef __list_iterator<T, T&, T*>      iterator;$/;"	t	class:__list_iterator
 iterator	list.h	/^    typedef __list_iterator<T, T&, T*> iterator;$/;"	t	class:list
+iterator	map.h	/^    typedef typename rep_type::iterator         iterator;$/;"	t	class:map
 iterator	rb_tree.h	/^    typedef __rb_tree_iterator<Value, Value&, Value*>               iterator;$/;"	t	struct:__rb_tree_iterator
 iterator	rb_tree.h	/^    typedef __rb_tree_iterator<value_type, reference, pointer> iterator;$/;"	t	class:rb_tree
+iterator	set.h	/^    typedef typename rep_type::const_iterator   iterator;$/;"	t	class:set
 iterator	vector.h	/^    typedef value_type* iterator;$/;"	t	class:vector
 iterator_category	deque.h	/^    typedef random_access_iterator_tag iterator_category;$/;"	t	struct:__deque_iterator
+iterator_category	hashtable.h	/^    typedef forward_iterator_tag    iterator_category;$/;"	t	struct:__hashtable_const_iterator
+iterator_category	hashtable.h	/^    typedef forward_iterator_tag iterator_category;$/;"	t	struct:__hashtable_iterator
 iterator_category	iterator.h	/^    typedef Category    iterator_category;$/;"	t	struct:iterator
 iterator_category	iterator.h	/^    typedef random_access_iterator_tag  iterator_category;$/;"	t	struct:iterator_traits
 iterator_category	iterator.h	/^    typedef typename Iterator::iterator_category    iterator_category;$/;"	t	struct:iterator_traits
@@ -246,8 +340,16 @@ iterator_traits	iterator.h	/^struct iterator_traits<const T*> {$/;"	s
 key	rb_tree.h	/^    static const Key& key(base_ptr x)$/;"	f	class:rb_tree
 key	rb_tree.h	/^    static const Key& key(link_type x)$/;"	f	class:rb_tree
 key_com	rb_tree.h	/^    Compare key_com() const { return key_compare; }$/;"	f	class:rb_tree
+key_comp	map.h	/^    key_compare key_comp() const { return t.key_comp(); }$/;"	f	class:map
+key_comp	set.h	/^    key_compare key_comp() const { return t.key_comp(); }$/;"	f	class:set
+key_compare	map.h	/^    typedef Compare                 key_compare;$/;"	t	class:map
 key_compare	rb_tree.h	/^    Compare key_compare;$/;"	m	class:rb_tree
+key_compare	set.h	/^    typedef Compare key_compare;$/;"	t	class:set
+key_equal	hashtable.h	/^    typedef EqualKey    key_equal;$/;"	t	class:hashtable_
+key_type	hashtable.h	/^    typedef Key         key_type;$/;"	t	class:hashtable_
+key_type	map.h	/^    typedef Key                     key_type;$/;"	t	class:map
 key_type	rb_tree.h	/^    typedef Key                 key_type;$/;"	t	class:rb_tree
+key_type	set.h	/^    typedef Key     key_type;$/;"	t	class:set
 last	deque.h	/^    T* last;$/;"	m	struct:__deque_iterator
 left	rb_tree.h	/^    base_ptr left;$/;"	m	struct:__rb_tree_node_base
 left	rb_tree.h	/^    static link_type& left(base_ptr x)$/;"	f	class:rb_tree
@@ -262,38 +364,68 @@ list	list.h	/^    list() { empty_inisialize(); }$/;"	f	class:list
 list	list.h	/^class list $/;"	c
 list_node	list.h	/^    typedef __list_node<T> list_node;$/;"	t	class:list
 list_node_allocator	list.h	/^    typedef simple_alloc<list_node, Alloc> list_node_allocator;$/;"	t	class:list
+lower_bound	map.h	/^    const_iterator lower_bound(const key_type& x) const { return t.lower_bound(x); }$/;"	f	class:map
+lower_bound	map.h	/^    iterator lower_bound(const key_type& x) { return t.lower_bound(x); }$/;"	f	class:map
+lower_bound	rb_tree.h	/^rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::lower_bound(const key_type& k) const$/;"	f	class:rb_tree
+lower_bound	rb_tree.h	/^rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::lower_bound(const key_type& k)$/;"	f	class:rb_tree
+lower_bound	set.h	/^    iterator lower_bound(const key_type& x) const { return t.lower_bound(x); }$/;"	f	class:set
 main	test.cpp	/^int main()$/;"	f
 malloc_alloc	malloctor.h	/^typedef __malloc_alloc_template<0> malloc_alloc;$/;"	t
 map	deque.h	/^    map_pointer map;$/;"	m	class:deque
+map	map.h	/^    explicit map(const Compare& comp) : t(comp) {}$/;"	f	class:map
+map	map.h	/^    map() : t(Compare()) {}$/;"	f	class:map
+map	map.h	/^    map(InputIterator first, InputIterator last) $/;"	f	class:map
+map	map.h	/^    map(InputIterator first, InputIterator last, const Compare& c)$/;"	f	class:map
+map	map.h	/^    map(const map<Key, T, Compare, Alloc>& x) : t(x.t) {}$/;"	f	class:map
+map	map.h	/^class map$/;"	c
 map_allocator	deque.h	/^    typedef simple_alloc<pointer, Alloc> map_allocator;$/;"	t	class:deque
 map_pointer	deque.h	/^    typedef T**         map_pointer;$/;"	t	struct:__deque_iterator
 map_pointer	deque.h	/^    typedef pointer* map_pointer;$/;"	t	class:deque
 map_size	deque.h	/^    size_type map_size;$/;"	m	class:deque
+mapper_data	map.h	/^    typedef T                       mapper_data;$/;"	t	class:map
 max	deque.h	/^    size_type max(size_type s1, size_type s2)$/;"	f	class:deque
+max_bucket_count	hashtable.h	/^    size_type max_bucket_count() const $/;"	f	class:hashtable_
 max_size	deque.h	/^    size_type max_size() const { return size_type(-1); }$/;"	f	class:deque
+max_size	map.h	/^    size_type max_size() const { return t.max_size(); }$/;"	f	class:map
 max_size	rb_tree.h	/^    size_type max_size() const { return size_type(-1); }$/;"	f	class:rb_tree
+max_size	set.h	/^    size_type max_size() const { return t.max_size(); }$/;"	f	class:set
 maximum	rb_tree.h	/^    static base_ptr maximum(base_ptr x)$/;"	f	struct:__rb_tree_node_base
 maximum	rb_tree.h	/^    static link_type maximum(link_type x)$/;"	f	class:rb_tree
 merge	list.h	/^void list<T, Alloc>::merge(list<T, Alloc>& x)$/;"	f	class:list
 minimum	rb_tree.h	/^    static base_ptr minimum(base_ptr x)$/;"	f	struct:__rb_tree_node_base
 minimum	rb_tree.h	/^    static link_type minimum(link_type x)$/;"	f	class:rb_tree
+new_node	hashtable.h	/^    node* new_node(const value_type& obj)$/;"	f	class:hashtable_
+next	hashtable.h	/^    __hashtable_node* next;$/;"	m	struct:__hashtable_node
 next	list.h	/^    void_pointer next;$/;"	m	struct:__list_node
+next_size	hashtable.h	/^    size_type next_size(size_type n)$/;"	f	class:hashtable_
 node	deque.h	/^    map_pointer node;$/;"	m	struct:__deque_iterator
+node	hashtable.h	/^    typedef __hashtable_node<Value> node;$/;"	t	class:hashtable_
+node	hashtable.h	/^    typedef __hashtable_node<Value> node;$/;"	t	struct:__hashtable_const_iterator
+node	hashtable.h	/^    typedef __hashtable_node<Value> node;$/;"	t	struct:__hashtable_iterator
 node	list.h	/^    link_type node; \/\/list迭代器内部指针 指向list节点$/;"	m	class:__list_iterator
 node	list.h	/^    link_type node;$/;"	m	class:list
 node	rb_tree.h	/^    base_ptr node; \/\/指向红黑树对应节点 与红黑树产生结合$/;"	m	struct:__rb_tree_base_iterator
+node_allocator	hashtable.h	/^    typedef simple_alloc<node, Alloc> node_allocator;$/;"	t	class:hashtable_
 node_count	rb_tree.h	/^    size_type node_count;$/;"	m	class:rb_tree
+num_elements	hashtable.h	/^    size_type num_elements;$/;"	m	class:hashtable_
 obj	default_allocator.h	/^    union obj {$/;"	u	class:__default_alloc_template
 oom_malloc	malloctor.h	/^void * __malloc_alloc_template<inst>::oom_malloc(size_t t) $/;"	f	class:__malloc_alloc_template
 oom_realloc	malloctor.h	/^void * __malloc_alloc_template<inst>::oom_realloc(void *p, size_t n)$/;"	f	class:__malloc_alloc_template
 operator !=	deque.h	/^    bool operator!=(const self& x) const { return cur != x.cur; }$/;"	f	struct:__deque_iterator
+operator !=	hashtable.h	/^    bool operator!=(const const_iterator& x)$/;"	f	struct:__hashtable_const_iterator
+operator !=	hashtable.h	/^    bool operator!=(const iterator& it) const { return cur != it.cur; }$/;"	f	struct:__hashtable_iterator
 operator !=	list.h	/^    bool operator!= (const self& x) const { return node != x.node; }$/;"	f	class:__list_iterator
+operator ()	map.h	/^        bool operator()(const value_type& x, const value_type& y) const$/;"	f	class:map::value_compare
 operator *	deque.h	/^    reference operator*() const { return *cur; }$/;"	f	struct:__deque_iterator
+operator *	hashtable.h	/^    reference operator*() const { return cur->val; }$/;"	f	struct:__hashtable_const_iterator
+operator *	hashtable.h	/^    reference operator*() const { return cur->val; }$/;"	f	struct:__hashtable_iterator
 operator *	list.h	/^    reference operator* () const { return (*node).data; }$/;"	f	class:__list_iterator
 operator *	rb_tree.h	/^    reference operator*() const { return link_type(node)->value_field; }$/;"	f	struct:__rb_tree_iterator
 operator +	deque.h	/^    self operator+(difference_type n) { return *this += n; }$/;"	f	struct:__deque_iterator
 operator ++	deque.h	/^    self operator++(int)$/;"	f	struct:__deque_iterator
 operator ++	deque.h	/^    self& operator++()$/;"	f	struct:__deque_iterator
+operator ++	hashtable.h	/^__hashtable_iterator<V, K, HF, ExK, EqK, A>::operator++()$/;"	f	class:__hashtable_iterator
+operator ++	hashtable.h	/^__hashtable_iterator<V, K, HF, ExK, EqK, A>::operator++(int)$/;"	f	class:__hashtable_iterator
 operator ++	list.h	/^    self& operator++() {$/;"	f	class:__list_iterator
 operator ++	list.h	/^    self& operator++(int) {$/;"	f	class:__list_iterator
 operator ++	rb_tree.h	/^    self operator++(int)$/;"	f	struct:__rb_tree_iterator
@@ -310,28 +442,45 @@ operator --	rb_tree.h	/^    self operator--(int)$/;"	f	struct:__rb_tree_iterator
 operator --	rb_tree.h	/^    self& operator--() { decrement(); return *this; }$/;"	f	struct:__rb_tree_iterator
 operator -=	deque.h	/^    self& operator-=(difference_type n)$/;"	f	struct:__deque_iterator
 operator ->	deque.h	/^    pointer operator->() const { return &(operator*()); }$/;"	f	struct:__deque_iterator
+operator ->	hashtable.h	/^    pointer operator->() const { return &(operator*()); }$/;"	f	struct:__hashtable_const_iterator
+operator ->	hashtable.h	/^    pointer operator->() const { return &(operator*()); }$/;"	f	struct:__hashtable_iterator
 operator ->	list.h	/^    pointer operator-> () const { return &operator*(); }$/;"	f	class:__list_iterator
 operator ->	rb_tree.h	/^    pointer operator->() const { return &(operator*()); }$/;"	f	struct:__rb_tree_iterator
 operator <	deque.h	/^    bool operator<(const self& x) const $/;"	f	struct:__deque_iterator
+operator <	map.h	/^inline bool operator<(const map<Key, T, Compare, Alloc>& x, $/;"	f
+operator <	set.h	/^inline bool operator<(const set<Key, Compare, Alloc>& x,$/;"	f
+operator =	map.h	/^    map<Key, T, Compare, Alloc>& operator=(const map<Key, T, Compare, Alloc>& x)$/;"	f	class:map
+operator =	rb_tree.h	/^operator=(const rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& x)$/;"	f	class:rb_tree
+operator =	set.h	/^    set<Key, Compare, Alloc>& operator=(const set<Key, Compare, Alloc>&x) $/;"	f	class:set
 operator ==	deque.h	/^    bool operator==(const self& x) const { return cur == x.cur; }$/;"	f	struct:__deque_iterator
+operator ==	hashtable.h	/^    bool operator==(const const_iterator& x) $/;"	f	struct:__hashtable_const_iterator
+operator ==	hashtable.h	/^    bool operator==(const iterator& it) const { return cur == it.cur; }$/;"	f	struct:__hashtable_iterator
 operator ==	list.h	/^    bool operator== (const self& x) const { return node == x.node; }$/;"	f	class:__list_iterator
+operator ==	map.h	/^inline bool operator==(const map<Key, T, Compare, Alloc>& x, $/;"	f
+operator ==	set.h	/^inline bool operator==(const set<Key, Compare, Alloc>& x,$/;"	f
 operator []	deque.h	/^    reference operator[] (difference_type n) const { return *(this+n); }$/;"	f	struct:__deque_iterator
 operator []	deque.h	/^    reference operator[] (size_type n)$/;"	f	class:deque
+operator []	map.h	/^    T& operator[] (const key_type& k)$/;"	f	class:map
 operator []	vector.h	/^    reference operator[](size_type n) { return *(begin() + n); }$/;"	f	class:vector
 output_iterator_tag	iterator.h	/^struct output_iterator_tag {};$/;"	s
+pair_iterator_bool	set.h	/^    typedef std::pair<iterator, bool> pair_iterator_bool;$/;"	t	class:set
 parent	rb_tree.h	/^    base_ptr parent;$/;"	m	struct:__rb_tree_node_base
 parent	rb_tree.h	/^    static link_type& parent(base_ptr x)$/;"	f	class:rb_tree
 parent	rb_tree.h	/^    static link_type& parent(link_type x)$/;"	f	class:rb_tree
 pointer	deque.h	/^    typedef Ptr         pointer;$/;"	t	struct:__deque_iterator
 pointer	deque.h	/^    typedef value_type* pointer;$/;"	t	class:deque
+pointer	hashtable.h	/^    typedef Value* pointer;$/;"	t	struct:__hashtable_iterator
+pointer	hashtable.h	/^    typedef const Value*            pointer;$/;"	t	struct:__hashtable_const_iterator
 pointer	iterator.h	/^    typedef Pointer     pointer;$/;"	t	struct:iterator
 pointer	iterator.h	/^    typedef T*                          pointer;$/;"	t	struct:iterator_traits
 pointer	iterator.h	/^    typedef const T*                    pointer;$/;"	t	struct:iterator_traits
 pointer	iterator.h	/^    typedef typename Iterator::pointer              pointer;$/;"	t	struct:iterator_traits
 pointer	list.h	/^    typedef Ptr             pointer;$/;"	t	class:__list_iterator
 pointer	list.h	/^    typedef T*                  pointer;$/;"	t	class:list
+pointer	map.h	/^    typedef typename rep_type::pointer          pointer;$/;"	t	class:map
 pointer	rb_tree.h	/^    typedef Ptr     pointer;$/;"	t	struct:__rb_tree_iterator
 pointer	rb_tree.h	/^    typedef value_type*         pointer;$/;"	t	class:rb_tree
+pointer	set.h	/^    typedef typename rep_type::const_pointer    pointer;$/;"	t	class:set
 pointer	vector.h	/^    typedef value_type* pointer;$/;"	t	class:vector
 pop_back	deque.h	/^    void pop_back()$/;"	f	class:deque
 pop_back	list.h	/^    void pop_back() {$/;"	f	class:list
@@ -359,19 +508,26 @@ reallocate	malloctor.h	/^    static void* reallocate(void *p, size_t \/* old siz
 reallocate_map	deque.h	/^void deque<T, Alloc, BufSiz>::reallocate_map(size_type nodes_to_add,$/;"	f	class:deque
 reference	deque.h	/^    typedef Ref         reference;$/;"	t	struct:__deque_iterator
 reference	deque.h	/^    typedef value_type& reference;$/;"	t	class:deque
+reference	hashtable.h	/^    typedef Value& reference;$/;"	t	struct:__hashtable_iterator
+reference	hashtable.h	/^    typedef const Value&            reference;$/;"	t	struct:__hashtable_const_iterator
 reference	iterator.h	/^    typedef Reference   reference;$/;"	t	struct:iterator
 reference	iterator.h	/^    typedef T&                          reference;$/;"	t	struct:iterator_traits
 reference	iterator.h	/^    typedef const T&                    reference;$/;"	t	struct:iterator_traits
 reference	iterator.h	/^    typedef typename Iterator::reference            reference;$/;"	t	struct:iterator_traits
 reference	list.h	/^    typedef Ref             reference;$/;"	t	class:__list_iterator
 reference	list.h	/^    typedef T&                  reference;$/;"	t	class:list
+reference	map.h	/^    typedef typename rep_type::reference        reference;$/;"	t	class:map
 reference	rb_tree.h	/^    typedef Ref     reference;$/;"	t	struct:__rb_tree_iterator
 reference	rb_tree.h	/^    typedef value_type&         reference;$/;"	t	class:rb_tree
+reference	set.h	/^    typedef typename rep_type::const_reference  reference;$/;"	t	class:set
 reference	vector.h	/^    typedef value_type& reference;$/;"	t	class:vector
 refill	default_allocator.h	/^void* __default_alloc_template<threads, inst>::refill(size_t n)$/;"	f	class:__default_alloc_template
 remove	list.h	/^void list<T, Alloc>::remove(const T& value)$/;"	f	class:list
+rep_type	map.h	/^                    std::_Select1st<value_type>, key_compare, Alloc>rep_type;    $/;"	t	class:map
+rep_type	set.h	/^                    std::_Identity<value_type>, key_compare, Alloc> rep_type;$/;"	t	class:set
 reserve_map_at_back	deque.h	/^    void reserve_map_at_back(size_type nodes_to_add = 1)$/;"	f	class:deque
 reserve_map_at_front	deque.h	/^    void reserve_map_at_front(size_type nodes_to_add = 1)$/;"	f	class:deque
+resize	hashtable.h	/^void hashtable_<V, K, HF, Ex, Eq, A>::resize(size_type num_elements_hint)$/;"	f	class:hashtable_
 resize	vector.h	/^    void resize(size_type new_size) { resize(new_size, T()); }$/;"	f	class:vector
 resize	vector.h	/^    void resize(size_type new_size, const T& x) {$/;"	f	class:vector
 reverse	list.h	/^void list<T, Alloc>::reverse() $/;"	f	class:list
@@ -383,18 +539,30 @@ root	rb_tree.h	/^    link_type& root() const { return (link_type&)header->parent
 self	deque.h	/^    typedef __deque_iterator self;$/;"	t	struct:__deque_iterator
 self	list.h	/^    typedef __list_iterator<T, Ref, Ptr>    self;$/;"	t	class:__list_iterator
 self	rb_tree.h	/^    typedef __rb_tree_iterator<Value, Ref, Ptr>                     self;$/;"	t	struct:__rb_tree_iterator
+set	set.h	/^        set(InputIterator first, InputIterator last) $/;"	f	class:set
+set	set.h	/^        set(InputIterator first, InputIterator last, const Compare& comp)$/;"	f	class:set
+set	set.h	/^    explicit set(const Compare& comp) : t(comp) {}$/;"	f	class:set
+set	set.h	/^    set() : t(Compare()) {}$/;"	f	class:set
+set	set.h	/^    set(const set<Key, Compare, Alloc>& x) : t(x.t) {}$/;"	f	class:set
+set	set.h	/^class set$/;"	c
 set_malloc_handler	malloctor.h	/^    static void (* set_malloc_handler(void (*f)()))() {$/;"	f	class:__malloc_alloc_template
 set_node	deque.h	/^    void set_node(map_pointer new_node)$/;"	f	struct:__deque_iterator
 simple_alloc	allocate.h	/^    class simple_alloc$/;"	c
 size	deque.h	/^    size_type size() const { return finish - start; }$/;"	f	class:deque
 size	list.h	/^    size_type size() const {$/;"	f	class:list
+size	map.h	/^    size_type size() const { return t.size(); }$/;"	f	class:map
 size	rb_tree.h	/^    size_type size() const { return node_count; }$/;"	f	class:rb_tree
+size	set.h	/^    size_type size() const { return t.size(); }$/;"	f	class:set
 size	vector.h	/^    size_type size() const { return size_type(end() - begin()); }$/;"	f	class:vector
 size_type	deque.h	/^    typedef size_t      size_type;$/;"	t	class:deque
 size_type	deque.h	/^    typedef size_t      size_type;$/;"	t	struct:__deque_iterator
+size_type	hashtable.h	/^    typedef size_t      size_type;$/;"	t	class:hashtable_
+size_type	hashtable.h	/^    typedef size_t size_type;$/;"	t	struct:__hashtable_iterator
 size_type	list.h	/^    typedef size_t          size_type;$/;"	t	class:__list_iterator
 size_type	list.h	/^    typedef std::ptrdiff_t      size_type;$/;"	t	class:list
+size_type	map.h	/^    typedef typename rep_type::size_type        size_type;$/;"	t	class:map
 size_type	rb_tree.h	/^    typedef size_t              size_type;$/;"	t	class:rb_tree
+size_type	set.h	/^    typedef typename rep_type::size_type        size_type;$/;"	t	class:set
 size_type	vector.h	/^    typedef size_t      size_type;$/;"	t	class:vector
 sort	list.h	/^void list<T, Alloc>::sort() $/;"	f	class:list
 splice	list.h	/^    void splice(iterator position, list& x) {$/;"	f	class:list
@@ -405,6 +573,10 @@ start	vector.h	/^    iterator start;         \/\/目前使用的空间头部$/;"
 start_free	default_allocator.h	/^    static char *start_free; \/\/内存池起始位置$/;"	m	class:__default_alloc_template
 start_free	default_allocator.h	/^char *__default_alloc_template<threads, inst>::start_free = 0;$/;"	m	class:__default_alloc_template
 swap	list.h	/^    void swap(list<T, Alloc>& x) { std::swap(node, x.node); }$/;"	f	class:list
+swap	map.h	/^    void swap(map<Key, T, Compare, Alloc>& x) { t.swap(x.t); }$/;"	f	class:map
+swap	set.h	/^    void swap(set<Key, Compare, Alloc>& x) { t.swap(x); }$/;"	f	class:set
+t	map.h	/^    rep_type t;$/;"	m	class:map
+t	set.h	/^    rep_type t;$/;"	m	class:set
 this_dummy_member_must_be_first	type_traits.h	/^    typedef __true_type     this_dummy_member_must_be_first;$/;"	t	struct:__type_traits
 transfer	list.h	/^    void transfer(iterator position, iterator first, iterator last) {$/;"	f	class:list
 uninitalized_fill_n	initialized.h	/^inline ForwardIterator uninitalized_fill_n(ForwardIterator first, Size n, const T& x) $/;"	f
@@ -413,19 +585,35 @@ uninitialized_copy	initialized.h	/^uninitialized_copy(const char* first, const c
 uninitialized_copy	initialized.h	/^uninitialized_copy(const wchar_t *first, const wchar_t *last, $/;"	f
 uninitialized_fill	initialized.h	/^uninitialized_fill(InputIterator first, InputIterator last, const T& value)$/;"	f
 unique	list.h	/^void list<T, Alloc>::unique() $/;"	f	class:list
+upper_bound	map.h	/^    const_iterator upper_bound(const key_type& x) const { return t.upper_bound(x); }$/;"	f	class:map
+upper_bound	map.h	/^    iterator upper_bound(const key_type& x) { return t.upper_bound(x); }$/;"	f	class:map
+upper_bound	rb_tree.h	/^rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::upper_bound(const key_type& k) const$/;"	f	class:rb_tree
+upper_bound	rb_tree.h	/^rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::upper_bound(const key_type& k)$/;"	f	class:rb_tree
+upper_bound	set.h	/^    iterator upper_bound(const key_type& x) const { return t.upper_bound(x); }$/;"	f	class:set
+val	hashtable.h	/^    Value val;$/;"	m	struct:__hashtable_node
 value	rb_tree.h	/^    static reference value(base_ptr x)$/;"	f	class:rb_tree
 value	rb_tree.h	/^    static reference value(link_type x)$/;"	f	class:rb_tree
+value_comp	map.h	/^    value_compare value_comp() const { return value_compare(t.key_comp()); }$/;"	f	class:map
+value_comp	set.h	/^    value_compare value_comp() const { return t.key_comp; }$/;"	f	class:set
+value_compare	map.h	/^        value_compare(Compare c) : comp(c) {}$/;"	f	class:map::value_compare
+value_compare	map.h	/^    class value_compare$/;"	c	class:map
+value_compare	set.h	/^    typedef Compare value_compare;$/;"	t	class:set
 value_field	rb_tree.h	/^    Value value_field;$/;"	m	struct:__rb_tree_node
 value_type	deque.h	/^    typedef T           value_type;$/;"	t	class:deque
 value_type	deque.h	/^    typedef T           value_type;$/;"	t	struct:__deque_iterator
+value_type	hashtable.h	/^    typedef Value                   value_type;$/;"	t	struct:__hashtable_const_iterator
+value_type	hashtable.h	/^    typedef Value       value_type;$/;"	t	class:hashtable_
+value_type	hashtable.h	/^    typedef Value value_type;$/;"	t	struct:__hashtable_iterator
 value_type	iterator.h	/^    typedef T                           value_type;$/;"	t	struct:iterator_traits
 value_type	iterator.h	/^    typedef T           value_type;$/;"	t	struct:iterator
 value_type	iterator.h	/^    typedef typename Iterator::value_type           value_type;$/;"	t	struct:iterator_traits
 value_type	iterator.h	/^value_type(const Iterator&)$/;"	f
 value_type	list.h	/^    typedef T                   value_type;$/;"	t	class:list
 value_type	list.h	/^    typedef T               value_type;$/;"	t	class:__list_iterator
+value_type	map.h	/^    typedef std::pair<const Key, T> value_type;$/;"	t	class:map
 value_type	rb_tree.h	/^    typedef Value               value_type;$/;"	t	class:rb_tree
 value_type	rb_tree.h	/^    typedef Value   value_type;$/;"	t	struct:__rb_tree_iterator
+value_type	set.h	/^    typedef Key     value_type;$/;"	t	class:set
 value_type	vector.h	/^    typedef T           value_type;$/;"	t	class:vector
 vector	vector.h	/^    explicit vector(size_type n) { fill_initialize(n, T()); }$/;"	f	class:vector
 vector	vector.h	/^    vector() : start(0), finish(0), end_of_storage(0) {}$/;"	f	class:vector
