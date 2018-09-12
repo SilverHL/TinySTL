@@ -16,6 +16,7 @@ _INITIALIZED_H	initialized.h	3;"	d
 _ITERATOR_H	iterator.h	3;"	d
 _LIST_H	list.h	3;"	d
 _MAP_H_	map.h	3;"	d
+_NUMERIC_H_	numeric.h	2;"	d
 _RB_TREE_	rb_tree.h	3;"	d
 _SET_H_	set.h	3;"	d
 _TYPE_TRAITS_	type_traits.h	3;"	d
@@ -109,6 +110,9 @@ __uninitialized_fill_aux	initialized.h	/^__uninitialized_fill_aux(InputIterator 
 __uninitialized_fill_n	initialized.h	/^inline ForwardIterator __uninitialized_fill_n(ForwardIterator first, Size n, const T& x, T1*)$/;"	f
 __uninitialized_fill_n_aux	initialized.h	/^__uninitialized_fill_n_aux(ForwardIterator first, Size n, $/;"	f
 _initial_map_size	deque.h	/^    enum _initial_map_size { initial_map_size = 8 };$/;"	g	class:deque
+accumulate	numeric.h	/^T accumulate(InputIterator first, InputIterator last, $/;"	f
+accumulate	numeric.h	/^T accumulate(InputIterator first, InputIterator last, T init)$/;"	f
+adjacent_difference	numeric.h	/^OutputIterator adjacent_difference(InputIterator first, InputIterator last, $/;"	f
 advance	iterator.h	/^inline void advance(InputIterator& i, Distance n) $/;"	f
 alloc	allocate.h	/^typedef default_alloc alloc;$/;"	t
 allocate	allocate.h	/^        static T *allocate(size_t n) { $/;"	f	class:simple_alloc
@@ -293,6 +297,7 @@ increment	rb_tree.h	/^    void increment()$/;"	f	struct:__rb_tree_base_iterator
 init	rb_tree.h	/^    void init()$/;"	f	class:rb_tree
 initial_map_size	deque.h	/^    enum _initial_map_size { initial_map_size = 8 };$/;"	e	enum:deque::_initial_map_size
 initialize_buckets	hashtable.h	/^    void initialize_buckets(size_type n)$/;"	f	class:hashtable_
+inner_product	numeric.h	/^T inner_product(InputIterator1 first1, InputIterator1 last1, $/;"	f
 input_iterator_tag	iterator.h	/^struct input_iterator_tag {};$/;"	s
 insert	deque.h	/^    iterator insert(iterator position, const value_type& x)$/;"	f	class:deque
 insert	list.h	/^    iterator insert(iterator position, const T& x) {$/;"	f	class:list
