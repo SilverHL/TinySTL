@@ -138,7 +138,8 @@ public:
     void splice(iterator position, list&, iterator i) {
         iterator j = i;
         ++j;
-        if (position == i || position == j) return;
+        if (position == i || position == j) 
+            return;
         transfer(position, i, j);
     }
 
